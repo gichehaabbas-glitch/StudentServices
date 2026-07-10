@@ -1,0 +1,1116 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 10, 2026 at 12:57 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `student_services`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `accountsview`
+-- (See below for the actual view)
+--
+CREATE TABLE `accountsview` (
+`student_id` int(11)
+,`student_name` varchar(101)
+,`fee_type` varchar(30)
+,`amount` decimal(10,2)
+,`term` varchar(10)
+,`academic_year` year(4)
+,`payment_date` date
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assessments`
+--
+
+CREATE TABLE `assessments` (
+  `assessment_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `subject_id` varchar(20) NOT NULL,
+  `term` varchar(10) NOT NULL,
+  `academic_year` year(4) NOT NULL,
+  `cat1_score` decimal(4,2) DEFAULT NULL CHECK (`cat1_score` between 0 and 20),
+  `cat2_score` decimal(4,2) DEFAULT NULL CHECK (`cat2_score` between 0 and 20),
+  `exam_score` decimal(4,2) DEFAULT NULL CHECK (`exam_score` between 0 and 60),
+  `attendance_pct` decimal(5,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assessments`
+--
+
+INSERT INTO `assessments` (`assessment_id`, `student_id`, `subject_id`, `term`, `academic_year`, `cat1_score`, `cat2_score`, `exam_score`, `attendance_pct`) VALUES
+(1, 1, 'M1-SUB01', 'Term 1', '2026', 15.00, 17.00, 48.00, 90.00),
+(2, 2, 'M1-SUB01', 'Term 1', '2026', 12.00, 14.00, 42.00, 85.00),
+(3, 3, 'M1-SUB02', 'Term 1', '2026', 18.00, 16.00, 50.00, 95.00),
+(4, 4, 'M4-SUB01', 'Term 1', '2026', 10.00, 11.00, 30.00, 70.00),
+(5, 5, 'M9-SUB01', 'Term 1', '2026', 16.00, 15.00, 45.00, 88.00),
+(6, 6, 'M8-SUB01', 'Term 1', '2026', 13.00, 12.00, 35.00, 80.00),
+(7, 7, 'M9-SUB01', 'Term 1', '2025', 19.00, 18.00, 55.00, 92.00),
+(8, 8, 'M12-SUB01', 'Term 1', '2026', 14.00, 13.00, 38.00, 78.00),
+(9, 9, 'M6-SUB01', 'Term 1', '2026', 9.00, 10.00, 28.00, 65.00),
+(10, 10, 'M8-SUB01', 'Term 1', '2026', 17.00, 16.00, 47.00, 91.00),
+(11, 11, 'M12-SUB01', 'Term 1', '2026', 11.00, 12.00, 33.00, 72.00),
+(12, 12, 'M2-SUB01', 'Term 2', '2026', 15.00, 14.00, 44.00, 87.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attachments`
+--
+
+CREATE TABLE `attachments` (
+  `attachment_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `firm_name` varchar(100) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `attachments`
+--
+
+INSERT INTO `attachments` (`attachment_id`, `student_id`, `module_id`, `firm_name`, `start_date`, `end_date`) VALUES
+(1, 3, 1, 'Safaricom PLC', '2026-05-01', '2026-07-31'),
+(2, 7, 9, 'Kenya Power', '2025-06-01', '2025-08-31'),
+(3, 9, 7, 'Sarova Hotels', '2026-05-01', '2026-07-31'),
+(4, 1, 1, 'iHub Nairobi', '2026-05-01', '2026-07-31'),
+(5, 5, 10, 'China Wu Yi Construction', '2026-05-01', '2026-07-31'),
+(6, 2, 1, 'Safaricom PLC', '2026-05-01', '2026-07-31'),
+(7, 11, 12, 'Kenya Tourism Board', '2026-05-01', '2026-07-31'),
+(8, 4, 4, 'Jumia Kenya', '2025-09-01', '2025-11-30'),
+(9, 6, 9, 'Total Energies', '2026-05-01', '2026-07-31'),
+(10, 10, 7, 'Java House', '2026-05-01', '2026-07-31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `classes`
+--
+
+CREATE TABLE `classes` (
+  `class_id` int(11) NOT NULL,
+  `class_name` varchar(50) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`class_id`, `class_name`, `course_id`) VALUES
+(1, 'CS-1A', 1),
+(2, 'CS-1B', 1),
+(3, 'ICT-1A', 2),
+(4, 'BS-1A', 3),
+(5, 'SM-1A', 4),
+(6, 'EL-1A', 5),
+(7, 'CE-1A', 6),
+(8, 'H-1A', 7),
+(9, 'T-1A', 8),
+(10, 'TM-1A', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_intake`
+--
+
+CREATE TABLE `class_intake` (
+  `class_id` int(11) NOT NULL,
+  `intake_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_intake`
+--
+
+INSERT INTO `class_intake` (`class_id`, `intake_id`) VALUES
+(1, 4),
+(1, 5),
+(2, 5),
+(3, 4),
+(4, 3),
+(5, 3),
+(6, 2),
+(7, 4),
+(8, 3),
+(9, 5),
+(10, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clubmembership`
+--
+
+CREATE TABLE `clubmembership` (
+  `membership_id` int(11) NOT NULL,
+  `club_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `year_joined` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `clubmembership`
+--
+
+INSERT INTO `clubmembership` (`membership_id`, `club_id`, `student_id`, `year_joined`) VALUES
+(1, 1, 1, '2026'),
+(2, 1, 2, '2026'),
+(3, 1, 3, '2025'),
+(4, 2, 4, '2026'),
+(5, 2, 5, '2025'),
+(6, 3, 5, '2026'),
+(7, 3, 6, '2026'),
+(8, 3, 7, '2025'),
+(9, 4, 8, '2026'),
+(10, 5, 2, '2026'),
+(11, 5, 10, '2025'),
+(12, 6, 9, '2026');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clubs`
+--
+
+CREATE TABLE `clubs` (
+  `club_id` int(11) NOT NULL,
+  `club_name` varchar(100) NOT NULL,
+  `patron_id` int(11) DEFAULT NULL,
+  `chairperson_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `clubs`
+--
+
+INSERT INTO `clubs` (`club_id`, `club_name`, `patron_id`, `chairperson_id`) VALUES
+(1, 'Debate Club', 3, 3),
+(2, 'Music Club', 6, 4),
+(3, 'Football Club', 7, 5),
+(4, 'Christian Union', 10, 8),
+(5, 'Photography Club', 2, 2),
+(6, 'Chess Club', 4, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `course_id` int(11) NOT NULL,
+  `course_name` varchar(100) NOT NULL,
+  `course_type` varchar(20) NOT NULL CHECK (`course_type` in ('Diploma','Certificate','Artisan')),
+  `department_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_name`, `course_type`, `department_id`) VALUES
+(1, 'Diploma in Computer Science', 'Diploma', 1),
+(2, 'Certificate in ICT', 'Certificate', 1),
+(3, 'Diploma in Business Management', 'Diploma', 2),
+(4, 'Certificate in Sales and Marketing', 'Certificate', 2),
+(5, 'Artisan in Electrical Installation', 'Artisan', 3),
+(6, 'Diploma in Civil Engineering', 'Diploma', 3),
+(7, 'Diploma in Hospitality Management', 'Diploma', 4),
+(8, 'Certificate in Catering', 'Certificate', 4),
+(9, 'Diploma in Tourism', 'Diploma', 5),
+(10, 'Artisan in Tourism Management', 'Artisan', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `deanview`
+-- (See below for the actual view)
+--
+CREATE TABLE `deanview` (
+`department_name` varchar(100)
+,`course_name` varchar(100)
+,`student_id` int(11)
+,`student_name` varchar(101)
+,`enrollment_status` varchar(20)
+,`firm_name` varchar(100)
+,`start_date` date
+,`end_date` date
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `departments`
+--
+
+CREATE TABLE `departments` (
+  `department_id` int(11) NOT NULL,
+  `department_name` varchar(100) NOT NULL,
+  `block_location` varchar(100) DEFAULT NULL,
+  `head_of_department` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `departments`
+--
+
+INSERT INTO `departments` (`department_id`, `department_name`, `block_location`, `head_of_department`) VALUES
+(1, 'Information Technology', 'Block A', 'Abbas Gicheha'),
+(2, 'Business Studies', 'Block B', 'John Owens'),
+(3, 'Engineering', 'Block C', 'Faith Kamau'),
+(4, 'Tourism', 'Block D', 'Michael Njoroge'),
+(5, 'Hospitality', 'Block E', 'Ms. Grace Wambui');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `examperformanceview`
+-- (See below for the actual view)
+--
+CREATE TABLE `examperformanceview` (
+`student_id` int(11)
+,`student_name` varchar(101)
+,`subject_name` varchar(100)
+,`term` varchar(10)
+,`academic_year` year(4)
+,`cat1_score` decimal(4,2)
+,`cat2_score` decimal(4,2)
+,`exam_score` decimal(4,2)
+,`supp_score` decimal(4,2)
+,`final_exam_score` decimal(4,2)
+,`total_score` decimal(6,2)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fees`
+--
+
+CREATE TABLE `fees` (
+  `fee_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `fee_type` varchar(30) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `term` varchar(10) NOT NULL,
+  `academic_year` year(4) NOT NULL,
+  `payment_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fees`
+--
+
+INSERT INTO `fees` (`fee_id`, `student_id`, `fee_type`, `amount`, `term`, `academic_year`, `payment_date`) VALUES
+(1, 1, 'Tuition', 25000.00, 'Term 1', '2026', '2026-01-10'),
+(2, 2, 'Tuition', 25000.00, 'Term 1', '2026', '2026-01-12'),
+(3, 3, 'Hostel', 8000.00, 'Term 1', '2026', '2026-01-15'),
+(4, 4, 'Tuition', 20000.00, 'Term 1', '2026', '2026-01-11'),
+(5, 5, 'Supplementary', 1500.00, 'Term 1', '2026', '2026-04-10'),
+(6, 6, 'Tuition', 20000.00, 'Term 1', '2026', '2026-01-13'),
+(7, 7, 'Tuition', 18000.00, 'Term 1', '2025', '2025-01-14'),
+(8, 8, 'Hostel', 8000.00, 'Term 1', '2026', '2026-01-16'),
+(9, 9, 'Tuition', 22000.00, 'Term 1', '2026', '2026-01-09'),
+(10, 10, 'Tuition', 18000.00, 'Term 1', '2026', '2026-01-10'),
+(11, 11, 'Supplementary', 1500.00, 'Term 1', '2026', '2026-04-11'),
+(12, 12, 'Hostel', 8000.00, 'Term 1', '2026', '2026-01-17');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `hodview`
+-- (See below for the actual view)
+--
+CREATE TABLE `hodview` (
+`department_name` varchar(100)
+,`course_name` varchar(100)
+,`lecturer_name` varchar(100)
+,`subject_name` varchar(100)
+,`class_id` int(11)
+,`term` varchar(10)
+,`hours_allocated` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hostelallocation`
+--
+
+CREATE TABLE `hostelallocation` (
+  `allocation_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `hostel_id` int(11) NOT NULL,
+  `payment_confirmed` tinyint(1) NOT NULL DEFAULT 0,
+  `term` varchar(10) NOT NULL,
+  `academic_year` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hostelallocation`
+--
+
+INSERT INTO `hostelallocation` (`allocation_id`, `student_id`, `hostel_id`, `payment_confirmed`, `term`, `academic_year`) VALUES
+(11, 1, 3, 1, 'Term 1', '2026'),
+(12, 2, 4, 1, 'Term 1', '2026'),
+(13, 3, 2, 1, 'Term 1', '2026'),
+(14, 4, 7, 0, 'Term 1', '2026'),
+(15, 5, 9, 1, 'Term 1', '2026'),
+(16, 6, 10, 1, 'Term 1', '2026'),
+(17, 8, 8, 1, 'Term 1', '2026'),
+(18, 9, 3, 0, 'Term 1', '2026'),
+(19, 10, 2, 1, 'Term 1', '2026'),
+(20, 12, 4, 1, 'Term 1', '2026');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hostels`
+--
+
+CREATE TABLE `hostels` (
+  `hostel_id` int(11) NOT NULL,
+  `hostel_name` varchar(50) NOT NULL,
+  `capacity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hostels`
+--
+
+INSERT INTO `hostels` (`hostel_id`, `hostel_name`, `capacity`) VALUES
+(2, 'Tana', 100),
+(3, 'ATHI', 40),
+(4, 'Mara', 56),
+(7, 'Foxfort', 34),
+(8, 'Alpha', 234),
+(9, 'Bravo', 35),
+(10, 'Bingo', 87);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `intakes`
+--
+
+CREATE TABLE `intakes` (
+  `intake_id` int(11) NOT NULL,
+  `intake_name` varchar(50) NOT NULL,
+  `start_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `intakes`
+--
+
+INSERT INTO `intakes` (`intake_id`, `intake_name`, `start_date`) VALUES
+(1, 'January 2025 Intake', '2025-01-06'),
+(2, 'May 2025 Intake', '2025-05-05'),
+(3, 'September 2025 Intake', '2025-09-01'),
+(4, 'January 2026 Intake', '2026-01-05'),
+(5, 'May 2026 Intake', '2026-05-04'),
+(6, 'September 2026 Intake', '2026-09-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lecturers`
+--
+
+CREATE TABLE `lecturers` (
+  `lecturer_id` int(11) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `specialty` varchar(100) NOT NULL,
+  `has_responsibility` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lecturers`
+--
+
+INSERT INTO `lecturers` (`lecturer_id`, `full_name`, `specialty`, `has_responsibility`) VALUES
+(1, 'Mr. John Kariuki', 'Computer Programming', 1),
+(2, 'Ms. Nancy Adhiambo', 'Database Systems', 0),
+(3, 'Mr. Paul Mwangi', 'Software Engineering', 0),
+(4, 'Mrs. Rose Chepkoech', 'Networking', 1),
+(5, 'Mr. David Njenga', 'Business Management', 0),
+(6, 'Ms. Winnie Auma', 'Marketing', 0),
+(7, 'Mr. Tom Kiplagat', 'Electrical Engineering', 1),
+(8, 'Mrs. Joan Muthoni', 'Structural Engineering', 0),
+(9, 'Mr. Eric Barasa', 'Hospitality Studies', 0),
+(10, 'Dr. Lydia Waweru', 'Tourism and Hospitality Studies', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `lecturerview`
+-- (See below for the actual view)
+--
+CREATE TABLE `lecturerview` (
+`lecturer_id` int(11)
+,`full_name` varchar(100)
+,`subject_name` varchar(100)
+,`class_id` int(11)
+,`term` varchar(10)
+,`student_id` int(11)
+,`student_name` varchar(101)
+,`cat1_score` decimal(4,2)
+,`cat2_score` decimal(4,2)
+,`exam_score` decimal(4,2)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules`
+--
+
+CREATE TABLE `modules` (
+  `module_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `module_number` int(11) NOT NULL,
+  `module_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`module_id`, `course_id`, `module_number`, `module_name`) VALUES
+(1, 1, 1, 'Programming Fundamentals'),
+(2, 1, 2, 'Database Systems'),
+(3, 1, 3, 'Software Engineering'),
+(4, 2, 1, 'Computer Basics'),
+(5, 3, 1, 'Principles of Business'),
+(6, 3, 2, 'Business Communication'),
+(7, 3, 3, 'Entrepreneurship'),
+(8, 5, 1, 'Basic Electrical Wiring'),
+(9, 6, 1, 'Structural Engineering I'),
+(10, 6, 2, 'Structural Engineering II'),
+(11, 9, 1, 'Introduction to Hospitality'),
+(12, 9, 2, 'Travel and Tour Operations');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `registrarview`
+-- (See below for the actual view)
+--
+CREATE TABLE `registrarview` (
+`student_id` int(11)
+,`student_name` varchar(101)
+,`gender` varchar(10)
+,`date_of_birth` date
+,`course_name` varchar(100)
+,`class_name` varchar(50)
+,`enrollment_status` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `student_id` int(11) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `gender` varchar(10) NOT NULL CHECK (`gender` in ('Male','Female','Other')),
+  `address` varchar(150) DEFAULT NULL,
+  `course_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `enrollment_status` varchar(20) NOT NULL CHECK (`enrollment_status` in ('In Session','On Attachment','Completed')),
+  `contact_phone` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`student_id`, `first_name`, `last_name`, `date_of_birth`, `gender`, `address`, `course_id`, `class_id`, `enrollment_status`, `contact_phone`) VALUES
+(1, 'Brian', 'Otieno', '2003-04-12', 'Male', 'Nairobi', 1, 1, 'In Session', '0712345678'),
+(2, 'Faith', 'Wanjiru', '2002-11-08', 'Female', 'Kiambu', 1, 1, 'On Attachment', NULL),
+(3, 'Kevin', 'Mutua', '2003-02-20', 'Male', 'Machakos', 1, 2, 'On Attachment', NULL),
+(4, 'Grace', 'Achieng', '2001-07-15', 'Female', 'Kisumu', 2, 3, 'In Session', NULL),
+(5, 'Dennis', 'Kiptoo', '2002-09-30', 'Male', 'Eldoret', 3, 4, 'In Session', NULL),
+(6, 'Mercy', 'Nyambura', '2003-01-25', 'Female', 'Nakuru', 4, 5, 'In Session', NULL),
+(7, 'Samuel', 'Kamau', '2001-12-03', 'Male', 'Thika', 5, 6, 'Completed', NULL),
+(8, 'Esther', 'Chebet', '2002-06-18', 'Female', 'Kericho', 6, 7, 'In Session', NULL),
+(9, 'Peter', 'Njoroge', '2003-03-11', 'Male', 'Nyeri', 7, 8, 'On Attachment', NULL),
+(10, 'Lucy', 'Wambui', '2002-08-22', 'Female', 'Murang\'a', 8, 9, 'In Session', NULL),
+(11, 'Collins', 'Omondi', '2001-10-05', 'Male', 'Kisii', 9, 10, 'In Session', NULL),
+(12, 'Ann', 'Wairimu', '2003-05-14', 'Female', 'Nairobi', 1, 2, 'In Session', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `subject_id` varchar(20) NOT NULL,
+  `subject_name` varchar(100) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `hours_per_week` int(11) NOT NULL CHECK (`hours_per_week` between 2 and 6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`subject_id`, `subject_name`, `module_id`, `hours_per_week`) VALUES
+('M1-SUB01', 'Introduction to Programming', 1, 4),
+('M1-SUB02', 'Computer Logic and Design', 1, 3),
+('M12-SUB01', 'Principles of Tourism management', 12, 4),
+('M2-SUB01', 'SQL and Relational Databases', 2, 5),
+('M2-SUB02', 'Database Administration', 2, 4),
+('M3-SUB01', 'Software Development Life Cycle', 3, 4),
+('M4-SUB01', 'Computer Hardware Basics', 4, 3),
+('M5-SUB01', 'Network Fundamentals', 5, 4),
+('M6-SUB01', 'Introduction to Business studies', 6, 3),
+('M7-SUB01', 'Business Report Writing', 7, 2),
+('M8-SUB01', 'Starting a Business', 8, 3),
+('M9-SUB01', 'Electrical Safety and Wiring', 9, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplementaryexams`
+--
+
+CREATE TABLE `supplementaryexams` (
+  `supp_id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `fee_paid` decimal(10,2) NOT NULL,
+  `supp_score` decimal(4,2) DEFAULT NULL CHECK (`supp_score` between 0 and 60),
+  `date_taken` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplementaryexams`
+--
+
+INSERT INTO `supplementaryexams` (`supp_id`, `assessment_id`, `fee_paid`, `supp_score`, `date_taken`) VALUES
+(1, 4, 1500.00, 42.00, '2026-04-10'),
+(2, 9, 1500.00, 38.00, '2026-04-10'),
+(3, 11, 1500.00, 40.00, '2026-04-11'),
+(4, 2, 1500.00, 45.00, '2026-04-11'),
+(5, 8, 1500.00, 36.00, '2026-04-12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `useraccounts`
+--
+
+CREATE TABLE `useraccounts` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `role` varchar(20) NOT NULL CHECK (`role` in ('Admin','Faculty','Student')),
+  `linked_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `useraccounts`
+--
+
+INSERT INTO `useraccounts` (`user_id`, `username`, `password_hash`, `role`, `linked_id`) VALUES
+(1, '@admin1', 'admin 23', 'Admin', NULL),
+(2, '@jkariuki', 'kario2', 'Faculty', 1),
+(3, '@nadhiambo', 'adhiambo54', 'Faculty', 2),
+(4, '@pmwangi', 'Mwangi34', 'Faculty', 3),
+(5, '@rchepkoech', 'koech34', 'Faculty', 4),
+(6, '@botieno', 'otieno@5', 'Student', 1),
+(7, '@fwanjiru', 'w@njiru7', 'Student', 2),
+(8, '@kmutua', 'mutu@34', 'Student', 3),
+(9, '@gachieng', 'chieng347', 'Student', 4),
+(10, '@kiptoo', 'kiptooo@54@3', 'Student', 5),
+(11, '@nyambura', 'nyambura@34', 'Student', 6),
+(12, '@kamau', 'Kamau@er3', 'Student', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload`
+--
+
+CREATE TABLE `workload` (
+  `workload_id` int(11) NOT NULL,
+  `lecturer_id` int(11) NOT NULL,
+  `subject_id` varchar(20) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `term` varchar(10) NOT NULL,
+  `hours_allocated` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `workload`
+--
+
+INSERT INTO `workload` (`workload_id`, `lecturer_id`, `subject_id`, `class_id`, `term`, `hours_allocated`) VALUES
+(1, 1, 'M1-SUB01', 1, 'Term 1', 4),
+(2, 1, 'M1-SUB02', 2, 'Term 1', 3),
+(3, 2, 'M2-SUB01', 1, 'Term 2', 5),
+(4, 2, 'M2-SUB02', 2, 'Term 2', 4),
+(5, 3, 'M3-SUB01', 1, 'Term 3', 4),
+(6, 4, 'M5-SUB01', 3, 'Term 1', 4),
+(7, 5, 'M6-SUB01', 4, 'Term 1', 3),
+(8, 6, 'M8-SUB01', 5, 'Term 2', 3),
+(9, 7, 'M9-SUB01', 6, 'Term 1', 6),
+(10, 10, 'M12-SUB01', 10, 'Term 1', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `workloadview`
+-- (See below for the actual view)
+--
+CREATE TABLE `workloadview` (
+`lecturer_name` varchar(100)
+,`subject_name` varchar(100)
+,`class_id` int(11)
+,`term` varchar(10)
+,`hours_allocated` int(11)
+,`has_responsibility` tinyint(1)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `accountsview`
+--
+DROP TABLE IF EXISTS `accountsview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `accountsview`  AS SELECT `s`.`student_id` AS `student_id`, concat(`s`.`first_name`,' ',`s`.`last_name`) AS `student_name`, `f`.`fee_type` AS `fee_type`, `f`.`amount` AS `amount`, `f`.`term` AS `term`, `f`.`academic_year` AS `academic_year`, `f`.`payment_date` AS `payment_date` FROM (`fees` `f` join `students` `s` on(`f`.`student_id` = `s`.`student_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `deanview`
+--
+DROP TABLE IF EXISTS `deanview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `deanview`  AS SELECT `d`.`department_name` AS `department_name`, `c`.`course_name` AS `course_name`, `s`.`student_id` AS `student_id`, concat(`s`.`first_name`,' ',`s`.`last_name`) AS `student_name`, `s`.`enrollment_status` AS `enrollment_status`, `att`.`firm_name` AS `firm_name`, `att`.`start_date` AS `start_date`, `att`.`end_date` AS `end_date` FROM (((`students` `s` join `courses` `c` on(`s`.`course_id` = `c`.`course_id`)) join `departments` `d` on(`c`.`department_id` = `d`.`department_id`)) left join `attachments` `att` on(`att`.`student_id` = `s`.`student_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `examperformanceview`
+--
+DROP TABLE IF EXISTS `examperformanceview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `examperformanceview`  AS SELECT `s`.`student_id` AS `student_id`, concat(`s`.`first_name`,' ',`s`.`last_name`) AS `student_name`, `sub`.`subject_name` AS `subject_name`, `a`.`term` AS `term`, `a`.`academic_year` AS `academic_year`, `a`.`cat1_score` AS `cat1_score`, `a`.`cat2_score` AS `cat2_score`, `a`.`exam_score` AS `exam_score`, `se`.`supp_score` AS `supp_score`, coalesce(`se`.`supp_score`,`a`.`exam_score`) AS `final_exam_score`, `a`.`cat1_score`+ `a`.`cat2_score` + coalesce(`se`.`supp_score`,`a`.`exam_score`) AS `total_score` FROM (((`assessments` `a` join `students` `s` on(`a`.`student_id` = `s`.`student_id`)) join `subjects` `sub` on(`a`.`subject_id` = `sub`.`subject_id`)) left join `supplementaryexams` `se` on(`se`.`assessment_id` = `a`.`assessment_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `hodview`
+--
+DROP TABLE IF EXISTS `hodview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `hodview`  AS SELECT `d`.`department_name` AS `department_name`, `c`.`course_name` AS `course_name`, `l`.`full_name` AS `lecturer_name`, `sub`.`subject_name` AS `subject_name`, `w`.`class_id` AS `class_id`, `w`.`term` AS `term`, `w`.`hours_allocated` AS `hours_allocated` FROM (((((`departments` `d` join `courses` `c` on(`d`.`department_id` = `c`.`department_id`)) join `modules` `m` on(`c`.`course_id` = `m`.`course_id`)) join `subjects` `sub` on(`m`.`module_id` = `sub`.`module_id`)) join `workload` `w` on(`sub`.`subject_id` = `w`.`subject_id`)) join `lecturers` `l` on(`w`.`lecturer_id` = `l`.`lecturer_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `lecturerview`
+--
+DROP TABLE IF EXISTS `lecturerview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `lecturerview`  AS SELECT `l`.`lecturer_id` AS `lecturer_id`, `l`.`full_name` AS `full_name`, `sub`.`subject_name` AS `subject_name`, `w`.`class_id` AS `class_id`, `w`.`term` AS `term`, `s`.`student_id` AS `student_id`, concat(`s`.`first_name`,' ',`s`.`last_name`) AS `student_name`, `a`.`cat1_score` AS `cat1_score`, `a`.`cat2_score` AS `cat2_score`, `a`.`exam_score` AS `exam_score` FROM ((((`lecturers` `l` join `workload` `w` on(`l`.`lecturer_id` = `w`.`lecturer_id`)) join `subjects` `sub` on(`w`.`subject_id` = `sub`.`subject_id`)) join `students` `s` on(`s`.`class_id` = `w`.`class_id`)) left join `assessments` `a` on(`a`.`student_id` = `s`.`student_id` and `a`.`subject_id` = `sub`.`subject_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `registrarview`
+--
+DROP TABLE IF EXISTS `registrarview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `registrarview`  AS SELECT `s`.`student_id` AS `student_id`, concat(`s`.`first_name`,' ',`s`.`last_name`) AS `student_name`, `s`.`gender` AS `gender`, `s`.`date_of_birth` AS `date_of_birth`, `c`.`course_name` AS `course_name`, `cl`.`class_name` AS `class_name`, `s`.`enrollment_status` AS `enrollment_status` FROM ((`students` `s` join `courses` `c` on(`s`.`course_id` = `c`.`course_id`)) join `classes` `cl` on(`s`.`class_id` = `cl`.`class_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `workloadview`
+--
+DROP TABLE IF EXISTS `workloadview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `workloadview`  AS SELECT `l`.`full_name` AS `lecturer_name`, `sub`.`subject_name` AS `subject_name`, `w`.`class_id` AS `class_id`, `w`.`term` AS `term`, `w`.`hours_allocated` AS `hours_allocated`, `l`.`has_responsibility` AS `has_responsibility` FROM ((`workload` `w` join `lecturers` `l` on(`w`.`lecturer_id` = `l`.`lecturer_id`)) join `subjects` `sub` on(`w`.`subject_id` = `sub`.`subject_id`)) ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `assessments`
+--
+ALTER TABLE `assessments`
+  ADD PRIMARY KEY (`assessment_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Indexes for table `attachments`
+--
+ALTER TABLE `attachments`
+  ADD PRIMARY KEY (`attachment_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `module_id` (`module_id`);
+
+--
+-- Indexes for table `classes`
+--
+ALTER TABLE `classes`
+  ADD PRIMARY KEY (`class_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `class_intake`
+--
+ALTER TABLE `class_intake`
+  ADD PRIMARY KEY (`class_id`,`intake_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `clubmembership`
+--
+ALTER TABLE `clubmembership`
+  ADD PRIMARY KEY (`membership_id`),
+  ADD KEY `club_id` (`club_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `clubs`
+--
+ALTER TABLE `clubs`
+  ADD PRIMARY KEY (`club_id`),
+  ADD KEY `patron_id` (`patron_id`),
+  ADD KEY `chairperson_id` (`chairperson_id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`course_id`),
+  ADD KEY `department_id` (`department_id`);
+
+--
+-- Indexes for table `departments`
+--
+ALTER TABLE `departments`
+  ADD PRIMARY KEY (`department_id`);
+
+--
+-- Indexes for table `fees`
+--
+ALTER TABLE `fees`
+  ADD PRIMARY KEY (`fee_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `hostelallocation`
+--
+ALTER TABLE `hostelallocation`
+  ADD PRIMARY KEY (`allocation_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `hostel_id` (`hostel_id`);
+
+--
+-- Indexes for table `hostels`
+--
+ALTER TABLE `hostels`
+  ADD PRIMARY KEY (`hostel_id`);
+
+--
+-- Indexes for table `intakes`
+--
+ALTER TABLE `intakes`
+  ADD PRIMARY KEY (`intake_id`);
+
+--
+-- Indexes for table `lecturers`
+--
+ALTER TABLE `lecturers`
+  ADD PRIMARY KEY (`lecturer_id`);
+
+--
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`module_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `uq_student_identity` (`first_name`,`last_name`,`date_of_birth`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `class_id` (`class_id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subject_id`),
+  ADD KEY `module_id` (`module_id`);
+
+--
+-- Indexes for table `supplementaryexams`
+--
+ALTER TABLE `supplementaryexams`
+  ADD PRIMARY KEY (`supp_id`),
+  ADD KEY `assessment_id` (`assessment_id`);
+
+--
+-- Indexes for table `useraccounts`
+--
+ALTER TABLE `useraccounts`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `workload`
+--
+ALTER TABLE `workload`
+  ADD PRIMARY KEY (`workload_id`),
+  ADD KEY `lecturer_id` (`lecturer_id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `class_id` (`class_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `assessments`
+--
+ALTER TABLE `assessments`
+  MODIFY `assessment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `attachments`
+--
+ALTER TABLE `attachments`
+  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `classes`
+--
+ALTER TABLE `classes`
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `clubmembership`
+--
+ALTER TABLE `clubmembership`
+  MODIFY `membership_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `clubs`
+--
+ALTER TABLE `clubs`
+  MODIFY `club_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `departments`
+--
+ALTER TABLE `departments`
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `fees`
+--
+ALTER TABLE `fees`
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `hostelallocation`
+--
+ALTER TABLE `hostelallocation`
+  MODIFY `allocation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `hostels`
+--
+ALTER TABLE `hostels`
+  MODIFY `hostel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `intakes`
+--
+ALTER TABLE `intakes`
+  MODIFY `intake_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `lecturers`
+--
+ALTER TABLE `lecturers`
+  MODIFY `lecturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `supplementaryexams`
+--
+ALTER TABLE `supplementaryexams`
+  MODIFY `supp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `useraccounts`
+--
+ALTER TABLE `useraccounts`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `workload`
+--
+ALTER TABLE `workload`
+  MODIFY `workload_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `assessments`
+--
+ALTER TABLE `assessments`
+  ADD CONSTRAINT `assessments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `assessments_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
+
+--
+-- Constraints for table `attachments`
+--
+ALTER TABLE `attachments`
+  ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `attachments_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`module_id`);
+
+--
+-- Constraints for table `classes`
+--
+ALTER TABLE `classes`
+  ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
+
+--
+-- Constraints for table `class_intake`
+--
+ALTER TABLE `class_intake`
+  ADD CONSTRAINT `class_intake_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`),
+  ADD CONSTRAINT `class_intake_ibfk_2` FOREIGN KEY (`intake_id`) REFERENCES `intakes` (`intake_id`);
+
+--
+-- Constraints for table `clubmembership`
+--
+ALTER TABLE `clubmembership`
+  ADD CONSTRAINT `clubmembership_ibfk_1` FOREIGN KEY (`club_id`) REFERENCES `clubs` (`club_id`),
+  ADD CONSTRAINT `clubmembership_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`);
+
+--
+-- Constraints for table `clubs`
+--
+ALTER TABLE `clubs`
+  ADD CONSTRAINT `clubs_ibfk_1` FOREIGN KEY (`patron_id`) REFERENCES `lecturers` (`lecturer_id`),
+  ADD CONSTRAINT `clubs_ibfk_2` FOREIGN KEY (`chairperson_id`) REFERENCES `students` (`student_id`);
+
+--
+-- Constraints for table `courses`
+--
+ALTER TABLE `courses`
+  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`);
+
+--
+-- Constraints for table `fees`
+--
+ALTER TABLE `fees`
+  ADD CONSTRAINT `fees_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`);
+
+--
+-- Constraints for table `hostelallocation`
+--
+ALTER TABLE `hostelallocation`
+  ADD CONSTRAINT `hostelallocation_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `hostelallocation_ibfk_2` FOREIGN KEY (`hostel_id`) REFERENCES `hostels` (`hostel_id`);
+
+--
+-- Constraints for table `modules`
+--
+ALTER TABLE `modules`
+  ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`),
+  ADD CONSTRAINT `students_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`);
+
+--
+-- Constraints for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`module_id`) REFERENCES `modules` (`module_id`);
+
+--
+-- Constraints for table `supplementaryexams`
+--
+ALTER TABLE `supplementaryexams`
+  ADD CONSTRAINT `supplementaryexams_ibfk_1` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`assessment_id`);
+
+--
+-- Constraints for table `workload`
+--
+ALTER TABLE `workload`
+  ADD CONSTRAINT `workload_ibfk_1` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturers` (`lecturer_id`),
+  ADD CONSTRAINT `workload_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
+  ADD CONSTRAINT `workload_ibfk_3` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
