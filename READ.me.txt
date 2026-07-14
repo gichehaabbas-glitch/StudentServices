@@ -1,1 +1,1 @@
-My Name Abbas ,and i will be designing a database of  a college .I will be using xampp.
+My Name Abbas ,and i will be designing a database of  a college .I will be using xampp and other dbms tools.
